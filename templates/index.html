@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Pending interventions{% endblock %}
+
+
+{% block myscripts %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#table').dataTable();
+    } );
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="col-sm-offset-1 col-sm-10">
+        <h1>Pending interventions</h1>
+        <table class="table table-hover" id="table">
+            <thead>
+            <tr>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Summary</th>
+                <th>Location</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr onclick="location.href='/details/1'">
+                <td>Broken object</td>
+                <td>New</td>
+                <td>Bench is broken</td>
+                <td>Emile-Argand 8</td>
+                <td>12.04.2015 10:46</td>
+            </tr>
+            <tr>
+                <td>Dirtiness</td>
+                <td>In progress</td>
+                <td>Lots of trash on the street</td>
+                <td>Rue de la Maladière 96</td>
+                <td>11.04.2015 15:21</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Menu{% endblock %}
+
+{% block mystyles %}
+<style type="text/css">
+    #map { height: 700px; margin: 0; padding: 0;}
+</style>
+{% endblock %}
+
+{% block myscripts %}
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlEY5LJ1ChcLEd-J0Inv8P08OFDzyOEOQ"></script>
+<script type="text/javascript">
+    function initialize() {
+        var mapOptions = {
+            center: { lat: 46.9930, lng: 6.9319},
+            zoom: 15
+        };
+        var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        var pos1 = new google.maps.LatLng(46.999411, 6.948539);
+        var pos2 = new google.maps.LatLng(46.997292, 6.947801);
+        var content1 = "<dl><dt>Type</dt><dd>Broken object</dd><dt>Reported on</dt><dd>12 April 2015, 10:46</dd><dt>Reported by</dt><dd>Albert Dupont</dd><dt>Summary</dt><dd>Bench is broken</dd></dl><a href=\"details/1\">Details</a>";
+
+        var infowindow1 = new google.maps.InfoWindow({
+            content: content1
+        });
+
+        var marker1 = new google.maps.Marker({
+            position: pos1,
+            map: map,
+            title:"Broken bench"
+        });
+        var marker2 = new google.maps.Marker({
+            position: pos2,
+            map: map,
+            title:"Lots of trash on the street"
+        });
+        google.maps.event.addListener(marker1, 'click', function() {
+            infowindow1.open(map,marker1);
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="col-sm-offset-1 col-sm-10">
+        <h1>Interventions map</h1>
+
+
+        <div id="map"></div>
+    </div>
+</div>
+{% endblock %}

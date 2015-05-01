@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}User management{% endblock %}
+
+{%  block myscripts %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#table').dataTable();
+    } );
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="col-sm-offset-1 col-sm-10">
+        <h1>User management</h1>
+        <table class="table table-hover" id="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>E-mail</th>
+                <th>Registration date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Albert Dupont</td>
+                <td>Citizen</td>
+                <td><a href="mailto:albert.dupont@example.com">albert.dupont@example.com</a></td>
+                <td>24.01.2015</td>
+            </tr>
+            <tr>
+                <td>Admin Istrator</td>
+                <td>Administrator</td>
+                <td><a href="mailto:admin-neuchatel@egov.ch">admin-neuchatel@egov.ch</a></td>
+                <td>11.01.2015</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h2>New user</h2>
+        <form class="col-sm-12 col-lg-7">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="role">Role</label>
+                <select id="role" class="form-control">
+                    <option>Citizen</option>
+                    <option>Administrator</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" class="form-control" placeholder="myemail@example.com" id="email" />
+            </div>
+            <button type="button" class="btn btn-primary">Add user</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
