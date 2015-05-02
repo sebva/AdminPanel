@@ -170,7 +170,7 @@ if ( DataTable.TableTools ) {
 
 // Define as an AMD module if possible
 if ( typeof define === 'function' && define.amd ) {
-	define( ['jquery.dataTables', 'datatables'], factory );
+	define( ['jquery.dataTables.js', 'datatables'], factory );
 }
 else if ( typeof exports === 'object' ) {
     // Node/CommonJS

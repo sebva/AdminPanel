@@ -1,15 +1,16 @@
 {% extends "bootstrap/base.html" %}
+{% import "bootstrap/utils.html" as util %}
 
 {% block styles %}
 {{super()}}
-<link href="css/jquery.dataTables.min.css" rel="stylesheet" media="screen">
+<link href="/static/css/jquery.dataTables.min.css" rel="stylesheet" media="screen">
 {% block mystyles %}{% endblock %}
 {% endblock %}
 
 {% block scripts %}
 {{super()}}
-<script src="js/jquery.dataTables.min.js"></script>
-<script src="js/dataTables.bootstrap.js"></script>
+<script src="/static/js/jquery.dataTables.min.js"></script>
+<script src="/static/js/dataTables.bootstrap.js"></script>
 {% block myscripts %}{% endblock %}
 {% endblock %}
 
@@ -45,17 +46,22 @@
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                        <span class="glyphicon glyphicon-user"></span> Username
+                        <span class="glyphicon glyphicon-user"></span> {{ user.name }}
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="#">Change password</a></li>
                         <li class="divider"></li>
-                        <li><a href="/login">Logout</a></li>
+                        <li><a href="/logout">Logout</a></li>
                     </ul>
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+{% endblock %}
+
+{% block content %}
+{{util.flashed_messages()}}
+{% block mycontent %}{% endblock %}
 {% endblock %}
