@@ -1,6 +1,20 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/utils.html" as util %}
 
+{% macro render_field(field) %}
+<div class="form-group{% if field.errors %} has-error{% endif %}">
+    {{ field.label(class='control-label') }}
+    {{ field(class='form-control') }}
+    {% if field.errors %}
+        <ul>
+            {% for error in field.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+{% endmacro %}
+
 {% block styles %}
 {{super()}}
 <link href="/static/css/jquery.dataTables.min.css" rel="stylesheet" media="screen">
@@ -50,7 +64,7 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Change password</a></li>
+                        <li><a href="/change_password">Change password</a></li>
                         <li class="divider"></li>
                         <li><a href="/logout">Logout</a></li>
                     </ul>

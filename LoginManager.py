@@ -5,11 +5,15 @@ from flask import session, redirect, url_for
 
 def check_login(service, username, password):
     if username == 'toto' and password == 'pass':
-        return {'name': username, 'pass': password}
+        return {'name': username, 'pass': password, 'email': 'toto@example.com'}
     else:
         return None
     # return service.userLogIn(userName=username, Password=password)
 
+
+def change_password(service, email, old_password, new_password):
+    return True
+    # return service.changeEmployeePassword(**{'E-mail': email, 'oldPassword': old_password, 'newPassword': new_password})
 
 def login_user(user):
     session['logged_in'] = True
@@ -22,7 +26,7 @@ def login_required(func):
         try:
             if session['logged_in']:
                 return func(*args, **kwargs)
-        except:
+        except KeyError:
             pass
         return redirect(url_for('login'))
 

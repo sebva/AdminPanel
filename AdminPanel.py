@@ -1,17 +1,17 @@
 # coding=utf-8
-import os
 
 from flask import Flask, render_template, url_for, redirect, request, flash
 from flask_bootstrap import Bootstrap
 from suds.client import Client as SudsClient
 
+from ChangePasswordForm import ChangePasswordForm
 from LoginForm import LoginForm
-from LoginManager import login_required, check_login, login_user, logout, get_current_user
+from LoginManager import login_required, check_login, login_user, logout, get_current_user, change_password
 
 
 app = Flask(__name__)
 app.debug = True
-app.secret_key = os.urandom(24)
+app.secret_key = "\n\xebU\x9b\x8a\x1aO\x91\x15\x84\xbe\x1dx\xccD\xba\x16\x94\xc5\xa4\x03'\xe5\x16"
 Bootstrap(app)
 
 url = 'http://46.101.157.31:8888/eRepair/Services?wsdl'
@@ -74,6 +74,22 @@ def users():
     args = {}
     args.update(get_session_args())
     return render_template('users.html', **args)
+
+
+@app.route('/change_password', methods=["GET", "POST"])
+@login_required
+def change_password_action():
+    form = ChangePasswordForm(request.form)
+    if request.method == 'POST':
+        if form.validate():
+            if change_password(service, get_current_user()['email'], form.old_password.data, form.new_password.data):
+                flash("Password successfully changed!", category='success')
+        else:
+            flash('Please check your input', category='warning')
+
+    args = {'form': form}
+    args.update(get_session_args())
+    return render_template('change_password.html', **args)
 
 # endregion
 
