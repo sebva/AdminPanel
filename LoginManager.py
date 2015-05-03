@@ -13,8 +13,7 @@ def check_login(service, username, password):
 
 
 def change_password(service, email, old_password, new_password):
-    return True
-    # return service.changeEmployeePassword(**{'E-mail': email, 'oldPassword': old_password, 'newPassword': new_password})
+    return service.changeEmployeePassword(**{'E-mail': email, 'oldPassword': old_password, 'newPassword': new_password})
 
 
 def login_user(service, user):
