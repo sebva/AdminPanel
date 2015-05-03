@@ -50,7 +50,22 @@ def get_session_args():
 @app.route('/')
 @login_required
 def index_action():
-    args = {}
+    try:
+        catid = int(request.args['cat'])
+    except:
+        catid = 0
+
+    categories = [dict(x) for x in service.getAllCategories()]
+    if catid >= len(categories):
+        catid = 0
+
+    # TODO: Get repairs for current organization
+    repairs = [dict(x) for x in service.searchRepairByCategory(userEmail='ertan@sebil.com', categoryName=categories[catid]['catname'])]
+    args = {
+        'category': categories[catid],
+        'categories': categories,
+        'repairs': repairs
+    }
     args.update(get_session_args())
     return render_template('index.html', **args)
 
@@ -58,15 +73,23 @@ def index_action():
 @app.route('/map')
 @login_required
 def map_action():
-    args = {}
+    # TODO: Replace temporary request
+    repairs = [dict(x) for x in service.searchRepairByCategory(userEmail='ertan@sebil.com', categoryName='TEST CATEGORY')]
+    args = {
+        'repairs': repairs
+    }
     args.update(get_session_args())
     return render_template('map.html', **args)
 
 
-@app.route('/details/<object_id>')
+@app.route('/details/<int:request_id>')
 @login_required
-def details_action(object_id):
-    args = {}
+def details_action(request_id):
+    # TODO: Get repair for request_id
+    repair = [dict(x) for x in service.searchRepairByCategory(userEmail='ertan@sebil.com', categoryName='TEST CATEGORY')][0]
+    args = {
+        'repair': repair
+    }
     args.update(get_session_args())
     return render_template('details.html', **args)
 

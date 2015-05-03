@@ -9,13 +9,11 @@
 
         <dl>
             <dt>Type</dt>
-            <dd>Broken object</dd>
+            <dd>{{ repair['catname'] }}</dd>
             <dt>Reported on</dt>
-            <dd>12 April 2015, 10:46</dd>
+            <dd>{{ repair['createddatetime'] }}</dd>
             <dt>Reported by</dt>
-            <dd>Albert Dupont</dd>
-            <dt>Summary</dt>
-            <dd>Bench is broken</dd>
+            <dd><a href="mailto:{{ repair['useremail'] }}">{{ repair['username'] }}</a></dd>
         </dl>
 
         <div class="panel panel-default">
@@ -23,7 +21,7 @@
                 <h3 class="panel-title">Description</h3>
             </div>
             <div class="panel-body">
-                The bench located near the UniMail building is broken. Could you please fix it? Thanks in advance.
+                {{ repair['description'] }}
             </div>
         </div>
 
@@ -44,7 +42,7 @@
 
         <div class="col-sm-12 col-lg-6">
             <h2>Map</h2>
-            <iframe width="500" height="350" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=Rue%20Emile-Argand%208%2C%20Neuch%C3%A2tel%2C%20Suisse&key=AIzaSyBlEY5LJ1ChcLEd-J0Inv8P08OFDzyOEOQ"></iframe>
+            <iframe width="500" height="350" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBlEY5LJ1ChcLEd-J0Inv8P08OFDzyOEOQ&q={{ repair['GPS_coordinate_altitude'] }},{{ repair['GPS_coordinate_longitude'] }}&q="></iframe>
         </div>
         <div class="col-sm-12 col-lg-6">
             <h2>Images</h2>
