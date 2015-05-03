@@ -6,7 +6,8 @@ from suds.client import Client as SudsClient
 
 from ChangePasswordForm import ChangePasswordForm
 from LoginForm import LoginForm
-from LoginManager import login_required, check_login, login_user, logout, get_current_user, change_password
+from LoginManager import login_required, check_login, login_user, logout, get_current_user, change_password, \
+    get_current_organization
 
 
 app = Flask(__name__)
@@ -20,33 +21,34 @@ service = client.service
 
 # region Routes
 @app.route("/login", methods=["GET", "POST"])
-def login():
+def login_action():
     form = LoginForm(request.form)
     if request.method == 'POST' and form.validate():
         user = check_login(service, form.username.data, form.password.data)
         if user is not None:
-            login_user(user)
-            return redirect(url_for('index'))
+            login_user(service, user)
+            return redirect(url_for('index_action'))
         else:
             flash('Invalid credentials', category='warning')
     return render_template('login.html', form=form)
 
+
 @app.route('/logout')
 def logout_action():
     logout()
-    return redirect(url_for('login'))
+    return redirect(url_for('login_action'))
 
 
 def get_session_args():
     return {
-        'organization': u'Ville de Neuchâtel',
+        'organization': get_current_organization(),
         'user': get_current_user()
     }
 
 
 @app.route('/')
 @login_required
-def index():
+def index_action():
     args = {}
     args.update(get_session_args())
     return render_template('index.html', **args)
@@ -54,7 +56,7 @@ def index():
 
 @app.route('/map')
 @login_required
-def map():
+def map_action():
     args = {}
     args.update(get_session_args())
     return render_template('map.html', **args)
@@ -62,7 +64,7 @@ def map():
 
 @app.route('/details/<object_id>')
 @login_required
-def details(object_id):
+def details_action(object_id):
     args = {}
     args.update(get_session_args())
     return render_template('details.html', **args)
@@ -70,7 +72,7 @@ def details(object_id):
 
 @app.route('/users')
 @login_required
-def users():
+def users_action():
     args = {}
     args.update(get_session_args())
     return render_template('users.html', **args)

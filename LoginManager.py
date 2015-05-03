@@ -1,23 +1,26 @@
+# coding=utf-8
 from functools import wraps
 
 from flask import session, redirect, url_for
 
 
 def check_login(service, username, password):
-    if username == 'toto' and password == 'pass':
-        return {'name': username, 'pass': password, 'email': 'toto@example.com'}
+    user = service.employeeLogIn(employeeName=username, Password=password)
+    if user is not None:
+        return dict(user)
     else:
         return None
-    # return service.userLogIn(userName=username, Password=password)
 
 
 def change_password(service, email, old_password, new_password):
     return True
     # return service.changeEmployeePassword(**{'E-mail': email, 'oldPassword': old_password, 'newPassword': new_password})
 
-def login_user(user):
+
+def login_user(service, user):
     session['logged_in'] = True
     session['user'] = user
+    session['organization'] = dict(service.getRelatingOrganization(employeeEmail=user['email']))
 
 
 def login_required(func):
@@ -28,7 +31,7 @@ def login_required(func):
                 return func(*args, **kwargs)
         except KeyError:
             pass
-        return redirect(url_for('login'))
+        return redirect(url_for('login_action'))
 
     return decorated_view
 
@@ -36,6 +39,9 @@ def login_required(func):
 def get_current_user():
     return session['user']
 
+
+def get_current_organization():
+    return session['organization']
 
 def logout():
     session['logged_in'] = False
