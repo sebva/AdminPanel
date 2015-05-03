@@ -8,6 +8,7 @@ from ChangePasswordForm import ChangePasswordForm
 from LoginForm import LoginForm
 from LoginManager import login_required, check_login, login_user, logout, get_current_user, change_password, \
     get_current_organization
+from NewEmployeeForm import NewEmployeeForm
 
 
 app = Flask(__name__)
@@ -70,10 +71,38 @@ def details_action(object_id):
     return render_template('details.html', **args)
 
 
-@app.route('/users')
+@app.route('/users', methods=['GET', 'POST'])
 @login_required
 def users_action():
-    args = {}
+    form = NewEmployeeForm(request.form)
+    if request.method == 'POST' and form.validate():
+        new_employee = {
+            'oremail': get_current_organization()['email'],
+            'name': form.data['name'],
+            'email': form.data['email'],
+            'password': form.data['name'],
+            'gender': form.data['gender'],
+            'website': form.data['website']
+        }
+        if form.data['tel_number'] is not None:
+            new_employee['tel_number'] = form.data['tel_number'].e164
+        if form.data['mobile_number'] is not None:
+            new_employee['mobile_number'] = form.data['mobile_number'].e164
+        if form.data['birthdate'] is not None:
+            new_employee['birthdate'] = str(form.data['birthdate'])
+
+        result = service.addEmployee(newEmployee=new_employee)
+        if result > 0:
+            flash('Employee successfully added', category='success')
+            form = NewEmployeeForm()
+        else:
+            flash('There was a problem adding the employee, please verify your input and try again', category='error')
+
+    employees = service.getAllEmployees(OrganizationEmail=get_current_organization()['email'])
+    args = {
+        'employees': [dict(x) for x in employees],
+        'form': form
+    }
     args.update(get_session_args())
     return render_template('users.html', **args)
 
