@@ -20,6 +20,7 @@ url = 'http://46.101.157.31:8888/eRepair/Services?wsdl'
 client = SudsClient(url=url, cache=None)
 service = client.service
 
+
 # region Routes
 @app.route("/login", methods=["GET", "POST"])
 def login_action():
@@ -59,8 +60,7 @@ def index_action():
     if catid >= len(categories):
         catid = 0
 
-    # TODO: Get repairs for current organization
-    repairs = [dict(x) for x in service.searchRepairByCategory(userEmail='ertan@sebil.com', categoryName=categories[catid]['catname'])]
+    repairs = [dict(x) for x in service.getRepairmentByCity(CityName=get_current_organization()['city'])]
     args = {
         'category': categories[catid],
         'categories': categories,
@@ -73,8 +73,7 @@ def index_action():
 @app.route('/map')
 @login_required
 def map_action():
-    # TODO: Replace temporary request
-    repairs = [dict(x) for x in service.searchRepairByCategory(userEmail='ertan@sebil.com', categoryName='TEST CATEGORY')]
+    repairs = [dict(x) for x in service.getRepairmentByCity(CityName=get_current_organization()['city'])]
     args = {
         'repairs': repairs
     }
@@ -85,8 +84,7 @@ def map_action():
 @app.route('/details/<int:request_id>')
 @login_required
 def details_action(request_id):
-    # TODO: Get repair for request_id
-    repair = [dict(x) for x in service.searchRepairByCategory(userEmail='ertan@sebil.com', categoryName='TEST CATEGORY')][0]
+    repair = dict(service.getRepairmentByID(repairID=request_id))
     args = {
         'repair': repair
     }
