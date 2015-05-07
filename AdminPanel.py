@@ -92,6 +92,17 @@ def details_action(request_id):
     return render_template('details.html', **args)
 
 
+@app.route('/details/<int:request_id>/images')
+@login_required
+def images_action(request_id):
+    pictures = [dict(x) for x in service.getPictures(repairID=request_id)]
+    args = {
+        'pictures': pictures
+    }
+    args.update(get_session_args())
+    return render_template('images.html', **args)
+
+
 @app.route('/users', methods=['GET', 'POST'])
 @login_required
 def users_action():
