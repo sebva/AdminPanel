@@ -43,16 +43,11 @@ $.ajax('/details/{{ repair['rid'] }}/images').done(function(data) {
         </div>
 
         <h2>Status</h2>
-        <form class="form-inline">
+        <form class="form-inline" action="/details/{{ repair['rid'] }}" method="post">
             <div class="input-group">
-                <select class="form-control">
-                    <option class="form-control" selected="selected">New</option>
-                    <option>In progress</option>
-                    <option>Fixed</option>
-                    <option>Rejected</option>
-                </select>
+                {{ form.status(class='form-control') }}
                 <span class="input-group-btn">
-                    <button type="button" class="btn btn-primary">Change</button>
+                    <button type="submit" class="btn btn-primary">Change</button>
                 </span>
             </div>
         </form>

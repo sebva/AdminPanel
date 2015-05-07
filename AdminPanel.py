@@ -9,6 +9,7 @@ from LoginForm import LoginForm
 from LoginManager import login_required, check_login, login_user, logout, get_current_user, change_password, \
     get_current_organization
 from NewEmployeeForm import NewEmployeeForm
+from UpdateStatusForm import UpdateStatusForm
 
 
 app = Flask(__name__)
@@ -81,12 +82,19 @@ def map_action():
     return render_template('map.html', **args)
 
 
-@app.route('/details/<int:request_id>')
+@app.route('/details/<int:request_id>', methods=['GET', 'POST'])
 @login_required
 def details_action(request_id):
+    form = UpdateStatusForm(request.form)
+    if request.method == 'POST' and form.validate():
+        service.updateRepairmentStatus(RepairID=request_id, newStatus=form.status.data)
+
     repair = dict(service.getRepairmentByID(repairID=request_id))
+    form.status.data = repair['status']
+
     args = {
-        'repair': repair
+        'repair': repair,
+        'form': form
     }
     args.update(get_session_args())
     return render_template('details.html', **args)
