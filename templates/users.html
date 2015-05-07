@@ -1,26 +1,30 @@
 {% extends "base.html" %}
 
-{% block title %}User management{% endblock %}
+{% block title %}{% trans %}User management{% endtrans %}{% endblock %}
 
 {%  block myscripts %}
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#table').dataTable();
-    } );
+        $('#table').dataTable({
+            "language": {
+                "url": "/static/js/dataTables.{{ lang }}.json"
+            }
+        });
+    });
 </script>
 {% endblock %}
 
 {% block mycontent %}
 <div class="container-fluid">
     <div class="col-sm-offset-1 col-sm-10">
-        <h1>User management</h1>
+        <h1>{% trans %}User management{% endtrans %}</h1>
         <table class="table table-hover" id="table">
             <thead>
             <tr>
-                <th>Name</th>
-                <th>E-mail</th>
-                <th>Tel. number</th>
-                <th>Mobile number</th>
+                <th>{% trans %}Name{% endtrans %}</th>
+                <th>{% trans %}E-mail{% endtrans %}</th>
+                <th>{% trans %}Tel. number{% endtrans %}</th>
+                <th>{% trans %}Mobile number{% endtrans %}</th>
             </tr>
             </thead>
             <tbody>
@@ -35,7 +39,7 @@
             </tbody>
         </table>
 
-        <h2>New user</h2>
+        <h2>{% trans %}New user{% endtrans %}</h2>
         <form class="col-sm-12 col-lg-7" action="/users" method="post">
             {{ render_field(form.name) }}
             {{ render_field(form.email) }}
@@ -46,7 +50,7 @@
             {{ render_field(form.gender) }}
             {{ render_field(form.birthdate) }}
             {{ render_field(form.website) }}
-            <button type="submit" class="btn btn-primary">Add user</button>
+            <button type="submit" class="btn btn-primary">{% trans %}Add user{% endtrans %}</button>
         </form>
     </div>
 </div>

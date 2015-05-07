@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Map{% endblock %}
+{% block title %}{% trans %}Map{% endtrans %}{% endblock %}
 
 {% block mystyles %}
 <style type="text/css">
@@ -30,10 +30,10 @@
 
         var pos{{ loop.index }} = new google.maps.LatLng({{ repair['GPS_coordinate_altitude'] }}, {{ repair['GPS_coordinate_longitude'] }});
         var content{{ loop.index }} = '<dl>' +
-         '<dt>Type</dt><dd>{{ repair['catname'] }}</dd>' +
-         '<dt>Reported on</dt><dd>{{ repair['createddatetime'] }}</dd>' +
-         '<dt>Reported by</dt><dd><a href="mailto:{{ repair['useremail'] }}">{{ repair['username'] }}</a></dd>' +
-         '<dt>Summary</dt><dd>{{ repair['description'] }}</dd></dl><a href="/details/{{ repair['rid'] }}">Details</a>';
+         '<dt>{% trans %}Type{% endtrans %}</dt><dd>{{ repair['catname'] }}</dd>' +
+         '<dt>{% trans %}Reported on{% endtrans %}</dt><dd>{{ repair['createddatetime'] }}</dd>' +
+         '<dt>{% trans %}Reported by{% endtrans %}</dt><dd><a href="mailto:{{ repair['useremail'] }}">{{ repair['username'] }}</a></dd>' +
+         '<dt>{% trans %}Summary{% endtrans %}</dt><dd>{{ repair['description'] }}</dd></dl><a href="/details/{{ repair['rid'] }}">{% trans %}Details{% endtrans %}</a>';
 
         var marker{{ loop.index }} = new google.maps.Marker({
             position: pos{{ loop.index }},
@@ -62,7 +62,7 @@
 {% block mycontent %}
 <div class="container-fluid">
     <div class="col-sm-offset-1 col-sm-10">
-        <h1>Interventions map</h1>
+        <h1>{% trans %}Interventions map{% endtrans %}</h1>
     </div>
 </div>
 

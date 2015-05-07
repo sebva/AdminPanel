@@ -1,0 +1,246 @@
+# German translations for PROJECT.
+# Copyright (C) 2015 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2015-05-07 21:34+0200\n"
+"PO-Revision-Date: 2015-05-07 21:35+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+
+#: AdminPanel.py:55
+msgid "Invalid credentials"
+msgstr ""
+
+#: AdminPanel.py:95
+msgid "Repairment status updated"
+msgstr ""
+
+#: AdminPanel.py:97
+msgid "Error while changing repairment status"
+msgstr ""
+
+#: AdminPanel.py:144
+msgid "Employee successfully added"
+msgstr ""
+
+#: AdminPanel.py:147
+msgid ""
+"There was a problem adding the employee, please verify your input and try"
+" again"
+msgstr ""
+
+#: AdminPanel.py:165
+msgid "Password successfully changed!"
+msgstr ""
+
+#: AdminPanel.py:167
+msgid "Please check your input"
+msgstr ""
+
+#: ChangePasswordForm.py:7
+msgid "Current password"
+msgstr ""
+
+#: ChangePasswordForm.py:8
+msgid "New password"
+msgstr ""
+
+#: ChangePasswordForm.py:10 NewEmployeeForm.py:11
+msgid "Password too short"
+msgstr ""
+
+#: ChangePasswordForm.py:12
+msgid "New password (again)"
+msgstr ""
+
+#: ChangePasswordForm.py:14
+msgid "Passwords must match"
+msgstr ""
+
+#: LoginForm.py:7
+msgid "Username"
+msgstr ""
+
+#: LoginForm.py:8 NewEmployeeForm.py:9
+msgid "Password"
+msgstr ""
+
+#: NewEmployeeForm.py:7 templates/users.html:24
+msgid "Name"
+msgstr ""
+
+#: NewEmployeeForm.py:8 templates/change_password.html:12
+#: templates/users.html:25
+msgid "E-mail"
+msgstr ""
+
+#: NewEmployeeForm.py:13
+msgid "Password (again)"
+msgstr ""
+
+#: NewEmployeeForm.py:17 templates/users.html:26
+msgid "Tel. number"
+msgstr ""
+
+#: NewEmployeeForm.py:19 templates/users.html:27
+msgid "Mobile number"
+msgstr ""
+
+#: NewEmployeeForm.py:21
+msgid "Gender"
+msgstr ""
+
+#: NewEmployeeForm.py:22
+msgid "Male"
+msgstr ""
+
+#: NewEmployeeForm.py:23
+msgid "Female"
+msgstr ""
+
+#: NewEmployeeForm.py:25
+msgid "Birth date"
+msgstr ""
+
+#: NewEmployeeForm.py:26
+msgid "Website"
+msgstr ""
+
+#: UpdateStatusForm.py:6 templates/details.html:45 templates/index.html:26
+msgid "Status"
+msgstr ""
+
+#: UpdateStatusForm.py:7
+msgid "New"
+msgstr ""
+
+#: UpdateStatusForm.py:8
+msgid "In progress"
+msgstr ""
+
+#: UpdateStatusForm.py:9
+msgid "Fixed"
+msgstr ""
+
+#: UpdateStatusForm.py:10
+msgid "Rejected"
+msgstr ""
+
+#: templates/base.html:38 templates/login.html:11
+msgid "Toggle navigation"
+msgstr ""
+
+#: templates/base.html:49 templates/index.html:3
+msgid "Pending interventions"
+msgstr ""
+
+#: templates/base.html:50 templates/details.html:56 templates/map.html:3
+msgid "Map"
+msgstr ""
+
+#: templates/base.html:51
+msgid "Employee management"
+msgstr ""
+
+#: templates/base.html:60 templates/base.html:70
+#: templates/change_password.html:3 templates/change_password.html:8
+#: templates/change_password.html:18
+msgid "Change password"
+msgstr ""
+
+#: templates/base.html:61 templates/base.html:72
+msgid "Logout"
+msgstr ""
+
+#: templates/details.html:3 templates/details.html:23
+msgid "Repairment details"
+msgstr ""
+
+#: templates/details.html:26 templates/index.html:25 templates/map.html:33
+msgid "Type"
+msgstr ""
+
+#: templates/details.html:28 templates/map.html:34
+msgid "Reported on"
+msgstr ""
+
+#: templates/details.html:30 templates/map.html:35
+msgid "Reported by"
+msgstr ""
+
+#: templates/details.html:32 templates/index.html:28
+msgid "Location"
+msgstr ""
+
+#: templates/details.html:38
+msgid "Description"
+msgstr ""
+
+#: templates/details.html:50
+msgid "Change"
+msgstr ""
+
+#: templates/details.html:60
+msgid "Images"
+msgstr ""
+
+#: templates/images.html:24
+msgid "Previous"
+msgstr ""
+
+#: templates/images.html:28
+msgid "Next"
+msgstr ""
+
+#: templates/index.html:21
+#, python-format
+msgid "Interventions for %(org_name)s"
+msgstr ""
+
+#: templates/index.html:27 templates/map.html:36
+msgid "Summary"
+msgstr ""
+
+#: templates/index.html:29
+msgid "Date"
+msgstr ""
+
+#: templates/login.html:26
+msgid "Welcome to E-Repair!"
+msgstr ""
+
+#: templates/login.html:47
+msgid "Login"
+msgstr ""
+
+#: templates/map.html:36
+msgid "Details"
+msgstr ""
+
+#: templates/map.html:65
+msgid "Interventions map"
+msgstr ""
+
+#: templates/users.html:3 templates/users.html:20
+msgid "User management"
+msgstr ""
+
+#: templates/users.html:42
+msgid "New user"
+msgstr ""
+
+#: templates/users.html:53
+msgid "Add user"
+msgstr ""
+

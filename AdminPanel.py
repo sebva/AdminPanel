@@ -1,7 +1,9 @@
 # coding=utf-8
 
-from flask import Flask, render_template, url_for, redirect, request, flash
+from flask import Flask, render_template, url_for, redirect, request, flash, session
+from flask.ext.babel import Babel, _, refresh
 from flask_bootstrap import Bootstrap
+
 from suds.client import Client as SudsClient
 
 from ChangePasswordForm import ChangePasswordForm
@@ -16,10 +18,38 @@ app = Flask(__name__)
 app.debug = True
 app.secret_key = "\n\xebU\x9b\x8a\x1aO\x91\x15\x84\xbe\x1dx\xccD\xba\x16\x94\xc5\xa4\x03'\xe5\x16"
 Bootstrap(app)
+babel = Babel(app)
 
 url = 'http://46.101.157.31:8888/eRepair/Services?wsdl'
 client = SudsClient(url=url, cache=None)
 service = client.service
+
+languages = ['de', 'fr', 'it', 'en']
+
+
+@babel.localeselector
+def get_locale():
+    if session.has_key('lang'):
+        return session['lang']
+
+    return request.accept_languages.best_match(languages)
+
+
+def check_lang_change():
+    if request.args.has_key('lang'):
+        session['lang'] = request.args['lang']
+        refresh()
+
+app.before_request(check_lang_change)
+
+
+def get_session_args():
+    return {
+        'organization': get_current_organization(),
+        'user': get_current_user(),
+        'lang': get_locale(),
+        'languages': languages
+    }
 
 
 # region Routes
@@ -32,7 +62,7 @@ def login_action():
             login_user(service, user)
             return redirect(url_for('index_action'))
         else:
-            flash('Invalid credentials', category='warning')
+            flash(_('Invalid credentials'), category='warning')
     return render_template('login.html', form=form)
 
 
@@ -40,13 +70,6 @@ def login_action():
 def logout_action():
     logout()
     return redirect(url_for('login_action'))
-
-
-def get_session_args():
-    return {
-        'organization': get_current_organization(),
-        'user': get_current_user()
-    }
 
 
 @app.route('/')
@@ -78,7 +101,11 @@ def map_action():
 def details_action(request_id):
     form = UpdateStatusForm(request.form)
     if request.method == 'POST' and form.validate():
-        service.updateRepairmentStatus(RepairID=request_id, newStatus=form.status.data)
+        if service.updateRepairmentStatus(RepairID=request_id, newStatus=form.status.data) == 1:
+            flash(_("Repairment status updated"), category='success')
+        else:
+            flash(_("Error while changing repairment status"), category='error')
+
 
     repair = dict(service.getRepairmentByID(repairID=request_id))
     form.status.data = repair['status']
@@ -124,10 +151,10 @@ def users_action():
 
         result = service.addEmployee(newEmployee=new_employee)
         if result > 0:
-            flash('Employee successfully added', category='success')
+            flash(_('Employee successfully added'), category='success')
             form = NewEmployeeForm()
         else:
-            flash('There was a problem adding the employee, please verify your input and try again', category='error')
+            flash(_('There was a problem adding the employee, please verify your input and try again'), category='error')
 
     employees = service.getAllEmployees(OrganizationEmail=get_current_organization()['email'])
     args = {
@@ -145,9 +172,9 @@ def change_password_action():
     if request.method == 'POST':
         if form.validate():
             if change_password(service, get_current_user()['email'], form.old_password.data, form.new_password.data):
-                flash("Password successfully changed!", category='success')
+                flash(_("Password successfully changed!"), category='success')
         else:
-            flash('Please check your input', category='warning')
+            flash(_('Please check your input'), category='warning')
 
     args = {'form': form}
     args.update(get_session_args())
@@ -156,4 +183,4 @@ def change_password_action():
 # endregion
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')

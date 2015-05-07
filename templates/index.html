@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}Pending interventions{% endblock %}
+{% block title %}{% trans %}Pending interventions{% endtrans %}{% endblock %}
 
 
 {% block myscripts %}
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#table').dataTable();
+        $('#table').dataTable({
+            "language": {
+                "url": "/static/js/dataTables.{{ lang }}.json"
+            }
+        });
     } );
 </script>
 {% endblock %}
@@ -14,15 +18,15 @@
 {% block mycontent %}
 <div class="container-fluid">
     <div class="col-sm-offset-1 col-sm-10">
-        <h1>Interventions for {{ organization['name'] }}</h1>
+        <h1>{% trans org_name=organization['name'] %}Interventions for {{ org_name }}{% endtrans %}</h1>
         <table class="table table-hover" id="table">
             <thead>
             <tr>
-                <th>Type</th>
-                <th>Status</th>
-                <th>Summary</th>
-                <th>Location</th>
-                <th>Date</th>
+                <th>{% trans %}Type{% endtrans %}</th>
+                <th>{% trans %}Status{% endtrans %}</th>
+                <th>{% trans %}Summary{% endtrans %}</th>
+                <th>{% trans %}Location{% endtrans %}</th>
+                <th>{% trans %}Date{% endtrans %}</th>
             </tr>
             </thead>
             <tbody>

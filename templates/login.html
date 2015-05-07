@@ -8,7 +8,7 @@
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
+                <span class="sr-only">{% trans %}Toggle navigation{% endtrans %}</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -23,7 +23,7 @@
 <div class="container-fluid">
     <div class="col-sm-offset-2 col-sm-6">
         <div class="col-sm-offset-4">
-            <h1 class="text-center">Welcome to E-Repair!</h1>
+            <h1 class="text-center">{% trans %}Welcome to E-Repair!{% endtrans %}</h1>
         </div>
 
         <form class="form-horizontal" action="/login" method="post">
@@ -32,19 +32,19 @@
                 {{ form.username.label(class='col-sm-4 control-label') }}
                 <div class="col-sm-8 input-group">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                    {{ form.username(class='form-control', placeholder='Username') }}
+                    {{ form.username(class='form-control') }}
                 </div>
             </div>
             <div class="form-group">
                 {{ form.password.label(class='col-sm-4 control-label') }}
                 <div class="col-sm-8 input-group">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                    {{ form.password(class='form-control', placeholder='Password') }}
+                    {{ form.password(class='form-control') }}
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-4">
-                    <button type="submit" class="btn btn-default">Login</button>
+                    <button type="submit" class="btn btn-default">{% trans %}Login{% endtrans %}</button>
                 </div>
             </div>
         </form>

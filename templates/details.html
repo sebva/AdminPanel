@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Menu{% endblock %}
+{% block title %}{% trans %}Repairment details{% endtrans %}{% endblock %}
 
 {% block myscripts %}
 <script type="text/javascript">
@@ -20,44 +20,44 @@ $.ajax('/details/{{ repair['rid'] }}/images').done(function(data) {
 {% block mycontent %}
 <div class="container-fluid">
     <div class="col-sm-offset-1 col-sm-10">
-        <h1>Intervention details</h1>
+        <h1>{% trans %}Repairment details{% endtrans %}</h1>
 
         <dl>
-            <dt>Type</dt>
+            <dt>{% trans %}Type{% endtrans %}</dt>
             <dd>{{ repair['catname'] }}</dd>
-            <dt>Reported on</dt>
+            <dt>{% trans %}Reported on{% endtrans %}</dt>
             <dd>{{ repair['createddatetime'] }}</dd>
-            <dt>Reported by</dt>
+            <dt>{% trans %}Reported by{% endtrans %}</dt>
             <dd><a href="mailto:{{ repair['useremail'] }}">{{ repair['username'] }}</a></dd>
-            <dt>Location</dt>
+            <dt>{% trans %}Location{% endtrans %}</dt>
             <dd>{{ repair['location'] }}</dd>
         </dl>
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Description</h3>
+                <h3 class="panel-title">{% trans %}Description{% endtrans %}</h3>
             </div>
             <div class="panel-body">
                 {{ repair['description'] }}
             </div>
         </div>
 
-        <h2>Status</h2>
+        <h2>{% trans %}Status{% endtrans %}</h2>
         <form class="form-inline" action="/details/{{ repair['rid'] }}" method="post">
             <div class="input-group">
                 {{ form.status(class='form-control') }}
                 <span class="input-group-btn">
-                    <button type="submit" class="btn btn-primary">Change</button>
+                    <button type="submit" class="btn btn-primary">{% trans %}Change{% endtrans %}</button>
                 </span>
             </div>
         </form>
 
         <div class="col-sm-12 col-lg-5">
-            <h2>Map</h2>
+            <h2>{% trans %}Map{% endtrans %}</h2>
             <iframe width="100%" height="350" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBlEY5LJ1ChcLEd-J0Inv8P08OFDzyOEOQ&q={{ repair['GPS_coordinate_altitude'] }},{{ repair['GPS_coordinate_longitude'] }}&q="></iframe>
         </div>
         <div class="col-sm-12 col-lg-6 col-lg-offset-1">
-            <h2>Images</h2>
+            <h2>{% trans %}Images{% endtrans %}</h2>
             <div id="images"> {# Dummy div #}
                 <div class="col-xs-4 col-xs-offset-4">
                     <p>&nbsp;</p>
