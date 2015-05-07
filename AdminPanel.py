@@ -52,20 +52,11 @@ def get_session_args():
 @app.route('/')
 @login_required
 def index_action():
-    try:
-        catid = int(request.args['cat'])
-    except:
-        catid = 0
-
-    categories = [dict(x) for x in service.getAllCategories()]
-    if catid >= len(categories):
-        catid = 0
-
     repairs = [dict(x) for x in service.getRepairmentByCity(CityName=get_current_organization()['city'])]
+
     args = {
-        'category': categories[catid],
-        'categories': categories,
-        'repairs': repairs
+        'repairs': repairs,
+        'organization': get_current_organization()
     }
     args.update(get_session_args())
     return render_template('index.html', **args)
