@@ -2,7 +2,28 @@
 
 {% block title %}E-Repair{% endblock %}
 
+{% block mystyles %}
+<style type="text/css">
+#map {
+    position: absolute;
+    top:50px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -3;
+}
+.jumbotron {
+    z-index: 1;
+    overflow: visible;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+}
+</style>
+{% endblock %}
+
 {% block navbar %}
+
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -13,42 +34,123 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">E-repair</a>
+            <a class="navbar-brand" href="#">E-Repair</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <p class="navbar-text">{% trans %}Employee login{% endtrans %}&nbsp;<i class="fa fa-hand-o-right"></i></p>
+                <form class="navbar-form navbar-left" role="form" action="/login" method="post">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user-secret"></i></span>
+                            {{ form.username(class='form-control input-sm') }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                            {{ form.password(class='form-control input-sm') }}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-sm">{% trans %}Login{% endtrans %}</button>
+                </form>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                        {% filter upper %}
+                        {{ lang }}
+                        {% endfilter %}
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        {% for language in languages %}
+                        <li><a href="{{ request.path }}?lang={{ language }}">
+                        {% filter upper %}
+                        {{ language }}
+                        {% endfilter %}
+                        </a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div><!-- /.container-fluid -->
 </nav>
 {% endblock %}
 
 {% block mycontent %}
-<div class="container-fluid">
-    <div class="col-sm-offset-2 col-sm-6">
-        <div class="col-sm-offset-4">
-            <h1 class="text-center">{% trans %}Welcome to E-Repair!{% endtrans %}</h1>
-        </div>
+<div id="map"></div>
 
-        <form class="form-horizontal" action="/login" method="post">
-            {{ form.csrf_token }}
-            <div class="form-group">
-                {{ form.username.label(class='col-sm-4 control-label') }}
-                <div class="col-sm-8 input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                    {{ form.username(class='form-control') }}
-                </div>
-            </div>
-            <div class="form-group">
-                {{ form.password.label(class='col-sm-4 control-label') }}
-                <div class="col-sm-8 input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                    {{ form.password(class='form-control') }}
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-4">
-                    <button type="submit" class="btn btn-default">{% trans %}Login{% endtrans %}</button>
-                </div>
-            </div>
-        </form>
+<div class="jumbotron">
+    <div class="container">
+        <h1>{% trans %}Welcome to E-Repair!{% endtrans %}</h1>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut gravida lorem.
     </div>
 </div>
+{% endblock %}
+
+
+{% block myscripts %}
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlEY5LJ1ChcLEd-J0Inv8P08OFDzyOEOQ"></script>
+<script type="text/javascript">
+    function initialize() {
+        var mapOptions = {
+            center: { lat: 46.9930, lng: 6.9319 },
+            zoom: 2,
+            disableDefaultUI: true,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        var bounds = new google.maps.LatLngBounds(new google.maps.LatLng(46.017789, 5.956286),
+            new google.maps.LatLng(48.014094, 10.49194));
+        var infowindow = new google.maps.InfoWindow();
+
+        {% for repair in repairs %}
+
+        var pos{{ loop.index }} = new google.maps.LatLng({{ repair['GPS_coordinate_altitude'] }}, {{ repair['GPS_coordinate_longitude'] }});
+        var content{{ loop.index }} = '<dl>' +
+         '<dt>{% trans %}Type{% endtrans %}</dt><dd>{{ repair['catname'] }}</dd>' +
+         '<dt>{% trans %}Reported on{% endtrans %}</dt><dd>{{ repair['createddatetime'] }}</dd>' +
+         '<dt>{% trans %}Summary{% endtrans %}</dt><dd>{{ repair['description'] }}</dd></dl>';
+
+        var marker{{ loop.index }} = new google.maps.Marker({
+            position: pos{{ loop.index }},
+            map: map,
+            title:"{{ repair['catname'] }}"
+        });
+
+        google.maps.event.addListener(marker{{ loop.index }}, 'click', function() {
+            infowindow.setContent(content{{ loop.index }});
+            infowindow.open(map, marker{{ loop.index }});
+        });
+        {% endfor %}
+
+        map.fitBounds(bounds);
+
+        var listener = google.maps.event.addDomListener(window, "resize", function () {
+            map.fitBounds(bounds);
+            //google.maps.event.removeListener(listener);
+        });
+
+
+        layer = new google.maps.FusionTablesLayer({
+            query: {
+              select: '\'kml_4326\'',
+              from: '420419',
+              where: 'name_0 = \'Switzerland\''
+            },
+            styles: [{
+              polygonOptions: {
+                fillColor: '#D6607A',
+                fillOpacity: 0.3
+              }
+            }],
+            suppressInfoWindows: true
+          });
+          layer.setMap(map);
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
 {% endblock %}
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-07 21:34+0200\n"
+"POT-Creation-Date: 2015-05-08 00:21+0200\n"
 "PO-Revision-Date: 2015-05-07 20:40+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: fr <LL@li.org>\n"
@@ -17,23 +17,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: AdminPanel.py:55
+#: AdminPanel.py:66
 msgid "Invalid credentials"
 msgstr "Nom d'utilisateur ou mot de passe invalide"
 
-#: AdminPanel.py:95
+#: AdminPanel.py:111
 msgid "Repairment status updated"
 msgstr "État de la réparation modifié avec succès"
 
-#: AdminPanel.py:97
+#: AdminPanel.py:113
 msgid "Error while changing repairment status"
 msgstr "Erreur : L'état de la réparation n'a pas pu être modifié"
 
-#: AdminPanel.py:144
+#: AdminPanel.py:160
 msgid "Employee successfully added"
 msgstr "Employé ajouté avec succès"
 
-#: AdminPanel.py:147
+#: AdminPanel.py:163
 msgid ""
 "There was a problem adding the employee, please verify your input and try"
 " again"
@@ -41,11 +41,11 @@ msgstr ""
 "Un problème est survenu en essayant d'ajouter l'employé. Veuillez "
 "vérifier votre saisie et réessayez."
 
-#: AdminPanel.py:165
+#: AdminPanel.py:181
 msgid "Password successfully changed!"
 msgstr "Le mot de passe a bien été changé !"
 
-#: AdminPanel.py:167
+#: AdminPanel.py:183
 msgid "Please check your input"
 msgstr "Veuillez contrôler votre saisie"
 
@@ -138,7 +138,7 @@ msgstr "Réparé"
 msgid "Rejected"
 msgstr "Rejeté"
 
-#: templates/base.html:38 templates/login.html:11
+#: templates/base.html:38 templates/login.html:32
 msgid "Toggle navigation"
 msgstr "Afficher les contrôles de navigation"
 
@@ -154,13 +154,12 @@ msgstr "Carte"
 msgid "Employee management"
 msgstr "Gestion des employés"
 
-#: templates/base.html:60 templates/base.html:70
-#: templates/change_password.html:3 templates/change_password.html:8
-#: templates/change_password.html:18
+#: templates/base.html:77 templates/change_password.html:3
+#: templates/change_password.html:8 templates/change_password.html:18
 msgid "Change password"
 msgstr "Changer le mot de passe"
 
-#: templates/base.html:61 templates/base.html:72
+#: templates/base.html:79
 msgid "Logout"
 msgstr "Déconnexion"
 
@@ -168,11 +167,12 @@ msgstr "Déconnexion"
 msgid "Repairment details"
 msgstr "Détails de l'intervention"
 
-#: templates/details.html:26 templates/index.html:25 templates/map.html:33
+#: templates/details.html:26 templates/index.html:25 templates/login.html:113
+#: templates/map.html:33
 msgid "Type"
 msgstr "Catégorie"
 
-#: templates/details.html:28 templates/map.html:34
+#: templates/details.html:28 templates/login.html:114 templates/map.html:34
 msgid "Reported on"
 msgstr "Annoncé le"
 
@@ -209,7 +209,7 @@ msgstr "Suivant"
 msgid "Interventions for %(org_name)s"
 msgstr "Interventions de %(org_name)s"
 
-#: templates/index.html:27 templates/map.html:36
+#: templates/index.html:27 templates/login.html:115 templates/map.html:36
 msgid "Summary"
 msgstr "Résumé"
 
@@ -217,13 +217,17 @@ msgstr "Résumé"
 msgid "Date"
 msgstr "Date"
 
-#: templates/login.html:26
-msgid "Welcome to E-Repair!"
-msgstr "Bienvenue sur E-Repair !"
+#: templates/login.html:43
+msgid "Employee login"
+msgstr "Accès employés"
 
-#: templates/login.html:47
+#: templates/login.html:57
 msgid "Login"
 msgstr "Connexion"
+
+#: templates/login.html:87
+msgid "Welcome to E-Repair!"
+msgstr "Bienvenue sur E-Repair !"
 
 #: templates/map.html:36
 msgid "Details"
@@ -244,5 +248,4 @@ msgstr "Nouvel utilisateur"
 #: templates/users.html:53
 msgid "Add user"
 msgstr "Ajouter utilisateur"
-
 

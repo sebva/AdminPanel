@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-05-07 21:34+0200\n"
+"POT-Creation-Date: 2015-05-08 00:21+0200\n"
 "PO-Revision-Date: 2015-05-07 21:35+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: it <LL@li.org>\n"
@@ -18,33 +18,33 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: AdminPanel.py:55
+#: AdminPanel.py:66
 msgid "Invalid credentials"
 msgstr ""
 
-#: AdminPanel.py:95
+#: AdminPanel.py:111
 msgid "Repairment status updated"
 msgstr ""
 
-#: AdminPanel.py:97
+#: AdminPanel.py:113
 msgid "Error while changing repairment status"
 msgstr ""
 
-#: AdminPanel.py:144
+#: AdminPanel.py:160
 msgid "Employee successfully added"
 msgstr ""
 
-#: AdminPanel.py:147
+#: AdminPanel.py:163
 msgid ""
 "There was a problem adding the employee, please verify your input and try"
 " again"
 msgstr ""
 
-#: AdminPanel.py:165
+#: AdminPanel.py:181
 msgid "Password successfully changed!"
 msgstr ""
 
-#: AdminPanel.py:167
+#: AdminPanel.py:183
 msgid "Please check your input"
 msgstr ""
 
@@ -137,7 +137,7 @@ msgstr ""
 msgid "Rejected"
 msgstr ""
 
-#: templates/base.html:38 templates/login.html:11
+#: templates/base.html:38 templates/login.html:32
 msgid "Toggle navigation"
 msgstr ""
 
@@ -153,13 +153,12 @@ msgstr ""
 msgid "Employee management"
 msgstr ""
 
-#: templates/base.html:60 templates/base.html:70
-#: templates/change_password.html:3 templates/change_password.html:8
-#: templates/change_password.html:18
+#: templates/base.html:77 templates/change_password.html:3
+#: templates/change_password.html:8 templates/change_password.html:18
 msgid "Change password"
 msgstr ""
 
-#: templates/base.html:61 templates/base.html:72
+#: templates/base.html:79
 msgid "Logout"
 msgstr ""
 
@@ -167,11 +166,12 @@ msgstr ""
 msgid "Repairment details"
 msgstr ""
 
-#: templates/details.html:26 templates/index.html:25 templates/map.html:33
+#: templates/details.html:26 templates/index.html:25 templates/login.html:113
+#: templates/map.html:33
 msgid "Type"
 msgstr ""
 
-#: templates/details.html:28 templates/map.html:34
+#: templates/details.html:28 templates/login.html:114 templates/map.html:34
 msgid "Reported on"
 msgstr ""
 
@@ -208,7 +208,7 @@ msgstr ""
 msgid "Interventions for %(org_name)s"
 msgstr ""
 
-#: templates/index.html:27 templates/map.html:36
+#: templates/index.html:27 templates/login.html:115 templates/map.html:36
 msgid "Summary"
 msgstr ""
 
@@ -216,12 +216,16 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: templates/login.html:26
-msgid "Welcome to E-Repair!"
+#: templates/login.html:43
+msgid "Employee login"
 msgstr ""
 
-#: templates/login.html:47
+#: templates/login.html:57
 msgid "Login"
+msgstr ""
+
+#: templates/login.html:87
+msgid "Welcome to E-Repair!"
 msgstr ""
 
 #: templates/map.html:36
@@ -243,4 +247,5 @@ msgstr ""
 #: templates/users.html:53
 msgid "Add user"
 msgstr ""
+
 

@@ -1,9 +1,9 @@
 # coding=utf-8
+from itertools import chain
 
 from flask import Flask, render_template, url_for, redirect, request, flash, session
 from flask.ext.babel import Babel, _, refresh
 from flask_bootstrap import Bootstrap
-
 from suds.client import Client as SudsClient
 
 from ChangePasswordForm import ChangePasswordForm
@@ -63,7 +63,12 @@ def login_action():
             return redirect(url_for('index_action'))
         else:
             flash(_('Invalid credentials'), category='warning')
-    return render_template('login.html', form=form)
+
+    categories_list = [cat['catname'] for cat in service.getAllCategories()]
+    repairs = [[dict(rep) for rep in service.searchRepairOnlyByCategory(cat)] for cat in categories_list]
+    repairs = list(chain.from_iterable(repairs))
+
+    return render_template('login.html', form=form, languages=languages, lang=get_locale(), repairs=repairs)
 
 
 @app.route('/logout')
