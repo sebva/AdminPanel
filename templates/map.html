@@ -4,7 +4,13 @@
 
 {% block mystyles %}
 <style type="text/css">
-    #map { height: 700px; margin: 0; padding: 0;}
+    #map {
+        position: absolute;
+        top:150px;
+        bottom: 40px;
+        left: 8%;
+        right: 8%;
+    }
 </style>
 {% endblock %}
 
@@ -57,9 +63,9 @@
 <div class="container-fluid">
     <div class="col-sm-offset-1 col-sm-10">
         <h1>Interventions map</h1>
-
-
-        <div id="map"></div>
     </div>
 </div>
+
+<div id="map"></div>
+
 {% endblock %}
