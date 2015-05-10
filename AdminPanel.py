@@ -1,5 +1,4 @@
 # coding=utf-8
-from itertools import chain
 
 from flask import Flask, render_template, url_for, redirect, request, flash, session
 from flask.ext.babel import Babel, _, refresh
@@ -64,9 +63,7 @@ def login_action():
         else:
             flash(_('Invalid credentials'), category='warning')
 
-    categories_list = [cat['catname'] for cat in service.getAllCategories()]
-    repairs = [[dict(rep) for rep in service.searchRepairOnlyByCategory(cat)] for cat in categories_list]
-    repairs = list(chain.from_iterable(repairs))
+    repairs = service.getAllRepairments()
 
     return render_template('login.html', form=form, languages=languages, lang=get_locale(), repairs=repairs)
 
@@ -80,7 +77,7 @@ def logout_action():
 @app.route('/')
 @login_required
 def index_action():
-    repairs = [dict(x) for x in service.getRepairmentByCity(CityName=get_current_organization()['city'])]
+    repairs = [dict(x) for x in service.getRepairmentByCity(CityName=get_current_organization()['name'])]
 
     args = {
         'repairs': repairs,
@@ -93,7 +90,7 @@ def index_action():
 @app.route('/map')
 @login_required
 def map_action():
-    repairs = [dict(x) for x in service.getRepairmentByCity(CityName=get_current_organization()['city'])]
+    repairs = [dict(x) for x in service.getRepairmentByCity(CityName=get_current_organization()['name'])]
     args = {
         'repairs': repairs
     }
