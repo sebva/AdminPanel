@@ -14,20 +14,24 @@ from UpdateStatusForm import UpdateStatusForm
 
 
 app = Flask(__name__)
-app.debug = True
+app.debug = True  # Change to False for production
 app.secret_key = "\n\xebU\x9b\x8a\x1aO\x91\x15\x84\xbe\x1dx\xccD\xba\x16\x94\xc5\xa4\x03'\xe5\x16"
 Bootstrap(app)
-babel = Babel(app)
+babel = Babel(app)  # i18n
 
-url = 'http://46.101.157.31:8888/eRepair/Services?wsdl'
+url = 'http://46.101.157.31:8888/eRepair/Services?wsdl'  # WSDL endpoint of API
 client = SudsClient(url=url, cache=None)
 service = client.service
 
-languages = ['de', 'fr', 'it', 'en']
+languages = ['de', 'fr', 'it', 'en']  # Supported languages
 
 
 @babel.localeselector
 def get_locale():
+    """
+    Select the language in which the language has to be displayed.
+    :return: The selected locale
+    """
     if session.has_key('lang'):
         return session['lang']
 
@@ -35,14 +39,22 @@ def get_locale():
 
 
 def check_lang_change():
+    """
+    Check if ?lang= is present in the URL, and change the language accordingly
+    """
     if request.args.has_key('lang'):
         session['lang'] = request.args['lang']
         refresh()
 
+# Always check if the user is trying to change the language
 app.before_request(check_lang_change)
 
 
 def get_session_args():
+    """
+    Get global arguments passed to all render_template calls
+    :return: Common arguments relative to the current session
+    """
     return {
         'organization': get_current_organization(),
         'user': get_current_user(),
@@ -52,8 +64,12 @@ def get_session_args():
 
 
 # region Routes
+
 @app.route("/login", methods=["GET", "POST"])
 def login_action():
+    """
+    Home page when the user is logged out, or for visitors
+    """
     form = LoginForm(request.form)
     if request.method == 'POST' and form.validate():
         user = check_login(service, form.username.data, form.password.data)
@@ -70,6 +86,9 @@ def login_action():
 
 @app.route('/logout')
 def logout_action():
+    """
+    Perform logout and redirect back to the visitor home page
+    """
     logout()
     return redirect(url_for('login_action'))
 
@@ -77,6 +96,9 @@ def logout_action():
 @app.route('/')
 @login_required
 def index_action():
+    """
+    Index for logged in users
+    """
     repairs = [dict(x) for x in service.getRepairmentByCity(CityName=get_current_organization()['name'])]
 
     args = {
@@ -90,6 +112,9 @@ def index_action():
 @app.route('/map')
 @login_required
 def map_action():
+    """
+    Map of the interventions in the active municipality
+    """
     repairs = [dict(x) for x in service.getRepairmentByCity(CityName=get_current_organization()['name'])]
     args = {
         'repairs': repairs
@@ -101,13 +126,16 @@ def map_action():
 @app.route('/details/<int:request_id>', methods=['GET', 'POST'])
 @login_required
 def details_action(request_id):
+    """
+    Show the details of a single request
+    :param request_id: The ID of the request
+    """
     form = UpdateStatusForm(request.form)
     if request.method == 'POST' and form.validate():
         if service.updateRepairmentStatus(RepairID=request_id, newStatus=form.status.data) == 1:
             flash(_("Repairment status updated"), category='success')
         else:
             flash(_("Error while changing repairment status"), category='error')
-
 
     repair = dict(service.getRepairmentByID(repairID=request_id))
     form.status.data = repair['status']
@@ -123,6 +151,10 @@ def details_action(request_id):
 @app.route('/details/<int:request_id>/images')
 @login_required
 def images_action(request_id):
+    """
+    Get the images embedded incorporated directly in a HTML stub
+    :param request_id: The ID of the request
+    """
     pictures = [dict(x) for x in service.getPictures(repairID=request_id)]
     args = {
         'pictures': pictures
@@ -134,6 +166,11 @@ def images_action(request_id):
 @app.route('/users', methods=['GET', 'POST'])
 @login_required
 def users_action():
+    """
+    Page where employees can be managed.
+    Only Create and Read operations are possible.
+    TODO Implement Update and Delete
+    """
     form = NewEmployeeForm(request.form)
     if request.method == 'POST' and form.validate():
         new_employee = {
@@ -170,6 +207,9 @@ def users_action():
 @app.route('/change_password', methods=["GET", "POST"])
 @login_required
 def change_password_action():
+    """
+    Page where the logged in user can change his password
+    """
     form = ChangePasswordForm(request.form)
     if request.method == 'POST':
         if form.validate():
@@ -185,4 +225,4 @@ def change_password_action():
 # endregion
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0')  # Beware: host='0.0.0.0' means that the server is available on all IPs
