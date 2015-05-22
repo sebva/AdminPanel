@@ -108,7 +108,7 @@
 
         {% for repair in repairs %}
 
-        var pos{{ loop.index }} = new google.maps.LatLng({{ repair['GPS_coordinate_altitude'] }}, {{ repair['GPS_coordinate_longitude'] }});
+        var pos{{ loop.index }} = new google.maps.LatLng({{ repair['GPS_coordinate_latitude'] }}, {{ repair['GPS_coordinate_longitude'] }});
         var content{{ loop.index }} = '<dl>' +
          '<dt>{% trans %}Type{% endtrans %}</dt><dd>{{ repair['catname'] }}</dd>' +
          '<dt>{% trans %}Reported on{% endtrans %}</dt><dd>{{ repair['createddatetime'] }}</dd>' +

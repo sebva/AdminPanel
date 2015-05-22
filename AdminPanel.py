@@ -79,7 +79,9 @@ def login_action():
         else:
             flash(_('Invalid credentials'), category='warning')
 
-    repairs = service.getAllRepairments()
+    # Ensure that coordinates are present
+    repairs = filter(lambda x: x['GPS_coordinate_latitude'] is not None and x['GPS_coordinate_longitude'],
+                     service.getAllRepairments())
 
     return render_template('login.html', form=form, languages=languages, lang=get_locale(), repairs=repairs)
 
